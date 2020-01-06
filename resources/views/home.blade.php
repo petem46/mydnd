@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="container">
-    <player-component></player-component>
+    <app></app>
 </div>
 @endsection

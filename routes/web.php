@@ -16,6 +16,7 @@
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/{any}', 'SpaController@index')->where('any', '.*');
+    // Route::get('/', 'HomeController@index')->name('home');
 });
 

@@ -1,39 +1,20 @@
 <template>
 <div>
-    <h1>Player</h1>
+    <h1>List</h1>
     <div v-if="message" class="alert-success">{{ message }}</div>
     <div v-if="! loaded"><i class="fas fa-spinner fa-spin fa-3x"></i>&nbsp;&nbsp; Loading...</div>
     <div v-if="loaded">
     <div class="container1">
         <div class="row justify-content-center">
-            <!-- <div class="col-6" v-for="pc in pcs"> -->
-                <div class="card mb-5" >
-                    <div class="card-header">
-                        <h1 class="display-6">
-                            <input type="text" v-model="pcname" @change="update">
-                        </h1>
-                        <h6>{{race}} </h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-2">Str: {{ str }}</div>
-                            <div class="col-2">Dex: {{ dex }}</div>
-                            <div class="col-2">Con: {{ con }}</div>
-                            <div class="col-2">Wis: {{ wis }}</div>
-                            <div class="col-2">Int: {{ int }}</div>
-                            <div class="col-2">Cha: {{ cha }}</div>
-                        </div>
-                    </div>
-                </div>
-            <!-- </div> -->
+            <player-component v-for="pc in pcs" v-bind="pc" :key="pc.id"></player-component>
         </div>
-        <!-- <paginate
+        <paginate
             :page-count="pageCount"
             :click-handler="fetch"
             :prev-text="'Prev'"
             :next-text="'Next'"
             :container-class="'pagination'">
-        </paginate> -->
+        </paginate>
     </div>
     </div>
 </div>
@@ -42,20 +23,15 @@
 <script>
     import axios from 'axios';
     export default {
-        props: ['id', 'name','race','str', 'dex', 'con', 'wis', 'int', 'cha'],
+
         data() {
             return {
                 message: null,
                 loaded: false,
-                pcname: this.name,
+                pcs: [],
                 pageCount: 1,
                 endpoint: 'api/pcs?page='
             };
-        },
-        computed: {
-            getName() {
-                return this.name;
-            }
         },
         created() {
             this.fetch();
@@ -72,10 +48,11 @@
                         this.loaded = true;
                     });
             },
-            update() {
+            update(val) {
                 // this.$emit('update', this.id, val.target.pc.race.value);
-                console.log('update('+ this.pcname + ');');
+                console.log('update');
             },
         },
+        // props: ['id','name', 'str'],
     }
 </script>
