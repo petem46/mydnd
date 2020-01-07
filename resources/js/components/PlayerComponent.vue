@@ -5,21 +5,37 @@
 <div>
     <!-- <div v-if="loaded"> -->
     <!-- <div class="row justify-content-center"> -->
-        <div class="card mb-5" >
+        <div class="card mb-5" id="playerCard">
             <div class="card-header">
-                <h1 class="display-6">
-                    <input type="text" v-model="pcname" @change="update">
-                </h1>
-                <h6>{{pcrace}} </h6>
+                <div class="row">
+                    <div class="col-6">
+                    <h6>{{pcgender}} {{pcrace}} </h6>
+                    <h1 class="display-6">
+                        <input type="text" v-model="pcname" @change="update" class="w-100">
+                    </h1>
+                    </div>
+                    <div class="col-2 text-center">
+                        <h6>AC</h6>
+                        <h1><input type="text" v-model="pcac" @change="update" class="w-100 text-center"></h1>
+                    </div>
+                    <div class="col-2 text-center">
+                        <h6>HP</h6>
+                        <h1><input type="text" v-model="pclivehp" @change="update" class="w-100 text-center"></h1>
+                    </div>
+                    <div class="col-2 text-center">
+                        <h6>MAX HP</h6>
+                        <h1><input type="text" v-model="pchp" @change="update" class="w-100 text-center text-muted"></h1>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-2"><button class="btn btn-success btn-sm btn-block" id="Str" name="upStr" @click="pcstr++; update();">+</button></div>
-                    <div class="col-2"><button class="btn btn-success btn-sm btn-block" id="Dex" name="upDex">+</button></div>
-                    <div class="col-2"><button class="btn btn-success btn-sm btn-block" id="Con" name="upCon">+</button></div>
-                    <div class="col-2"><button class="btn btn-success btn-sm btn-block" id="Wis" name="upWis">+</button></div>
-                    <div class="col-2"><button class="btn btn-success btn-sm btn-block" id="Int" name="upInt">+</button></div>
-                    <div class="col-2"><button class="btn btn-success btn-sm btn-block" id="Cha" name="upCha">+</button></div>
+                    <div class="col-2"><button class="btn btn-outline-primary btn-sm btn-block" id="Str" name="upStr" @click="pcstr++; update();">+</button></div>
+                    <div class="col-2"><button class="btn btn-outline-primary btn-sm btn-block" id="Dex" name="upDex" @click="pcdex++; update();">+</button></div>
+                    <div class="col-2"><button class="btn btn-outline-primary btn-sm btn-block" id="Con" name="upCon" @click="pccon++; update();">+</button></div>
+                    <div class="col-2"><button class="btn btn-outline-primary btn-sm btn-block" id="Wis" name="upWis" @click="pcwis++; update();">+</button></div>
+                    <div class="col-2"><button class="btn btn-outline-primary btn-sm btn-block" id="Int" name="upInt" @click="pcint++; update();">+</button></div>
+                    <div class="col-2"><button class="btn btn-outline-primary btn-sm btn-block" id="Cha" name="upCha" @click="pccha++; update();">+</button></div>
                 </div>
                 <div class="row text-center">
                     <div class="col-2">Str: {{ pcstr }}</div>
@@ -30,12 +46,12 @@
                     <div class="col-2">Cha: {{ pccha }}</div>
                 </div>
                 <div class="row">
-                    <div class="col-2"><button class="btn btn-danger btn-sm btn-block" id="Str" name="downStr">-</button></div>
-                    <div class="col-2"><button class="btn btn-danger btn-sm btn-block" id="Dex" name="downDex">-</button></div>
-                    <div class="col-2"><button class="btn btn-danger btn-sm btn-block" id="Con" name="downCon">-</button></div>
-                    <div class="col-2"><button class="btn btn-danger btn-sm btn-block" id="Wis" name="downWis">-</button></div>
-                    <div class="col-2"><button class="btn btn-danger btn-sm btn-block" id="Int" name="downInt">-</button></div>
-                    <div class="col-2"><button class="btn btn-danger btn-sm btn-block" id="Cha" name="downCha">-</button></div>
+                    <div class="col-2"><button class="btn btn-outline-danger btn-sm btn-block" id="Str" name="downStr" @click="pcstr--; update();">-</button></div>
+                    <div class="col-2"><button class="btn btn-outline-danger btn-sm btn-block" id="Dex" name="downDex" @click="pcdex--; update();">-</button></div>
+                    <div class="col-2"><button class="btn btn-outline-danger btn-sm btn-block" id="Con" name="downCon" @click="pccon--; update();">-</button></div>
+                    <div class="col-2"><button class="btn btn-outline-danger btn-sm btn-block" id="Wis" name="downWis" @click="pcwis--; update();">-</button></div>
+                    <div class="col-2"><button class="btn btn-outline-danger btn-sm btn-block" id="Int" name="downInt" @click="pcint--; update();">-</button></div>
+                    <div class="col-2"><button class="btn btn-outline-danger btn-sm btn-block" id="Cha" name="downCha" @click="pccha--; update();">-</button></div>
                 </div>
             </div>
         </div>
@@ -48,7 +64,7 @@
 <script>
     import axios from 'axios';
     export default {
-        props: ['id', 'name','race', 'gender','str', 'dex', 'con', 'wis', 'int', 'cha'],
+        props: ['id', 'name','race', 'gender','str', 'dex', 'con', 'wis', 'int', 'cha', 'livehp', 'hp', 'ac'],
         data() {
             return {
                 pcname: this.name,
@@ -60,6 +76,9 @@
                 pcwis: this.wis,
                 pcint: this.int,
                 pccha: this.cha,
+                pclivehp: this.livehp,
+                pchp: this.hp,
+                pcac: this.ac,
             };
         },
         mounted() {
@@ -77,7 +96,10 @@
                     this.pccon,
                     this.pcwis,
                     this.pcint,
-                    this.pccha
+                    this.pccha,
+                    this.pclivehp,
+                    this.pchp,
+                    this.pcac,
                 );
             },
             upStr() {

@@ -22,3 +22,8 @@
     @extend .btn-sm;
     @extend .btn-primary;
 }
+
+#playerCard input {
+    background-color: inherit !important;
+    border: none !important;
+}

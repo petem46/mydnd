@@ -25,11 +25,11 @@
 
 <script>
 
-    function Player({ id, name, race}) {
-        this.id = id;
-        this.name = name;
-        this.gender = gender;
-    }
+    // function Player({ id, name, race}) {
+    //     this.id = id;
+    //     this.name = name;
+    //     this.gender = gender;
+    // }
 
     import axios from 'axios';
     // import Players from './components/PlayerComponent';
@@ -69,7 +69,10 @@
                     con,
                     wis,
                     int,
-                    cha
+                    cha,
+                    livehp,
+                    hp,
+                    ac,
                 ) {
                 axios.put(`/api/pcs/${id}`, {
                     name,
@@ -80,10 +83,13 @@
                     con,
                     wis,
                     int,
-                    cha
+                    cha,
+                    livehp,
+                    hp,
+                    ac,
                 })
                 .then(() => {
-                    console.log('update ' + id + ' ' + name + ' str: ' + str );
+                    console.log(name + ' stats have been updated');
                     this.updated = true;
                 });
             },

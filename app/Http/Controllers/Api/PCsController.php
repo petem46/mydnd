@@ -34,6 +34,9 @@ class PCsController extends Controller
         $pc->int = $request->int;
         $pc->wis = $request->wis;
         $pc->cha = $request->cha;
+        $pc->livehp = $request->livehp;
+        $pc->hp = $request->hp;
+        $pc->ac = $request->ac;
         $pc->save();
         return response(null, Response::HTTP_OK);
     }

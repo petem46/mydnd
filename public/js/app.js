@@ -1887,9 +1887,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['id', 'name', 'race', 'gender', 'str', 'dex', 'con', 'wis', 'int', 'cha'],
+  props: ['id', 'name', 'race', 'gender', 'str', 'dex', 'con', 'wis', 'int', 'cha', 'livehp', 'hp', 'ac'],
   data: function data() {
     return {
       pcname: this.name,
@@ -1900,7 +1916,10 @@ __webpack_require__.r(__webpack_exports__);
       pccon: this.con,
       pcwis: this.wis,
       pcint: this["int"],
-      pccha: this.cha
+      pccha: this.cha,
+      pclivehp: this.livehp,
+      pchp: this.hp,
+      pcac: this.ac
     };
   },
   mounted: function mounted() {
@@ -1909,7 +1928,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     update: function update(val) {
       this.$emit('update', this.id, this.pcname, // this.pcrace,
-      this.pcgender, this.pcstr, this.pcdex, this.pccon, this.pcwis, this.pcint, this.pccha);
+      this.pcgender, this.pcstr, this.pcdex, this.pccon, this.pcwis, this.pcint, this.pccha, this.pclivehp, this.pchp, this.pcac);
     },
     upStr: function upStr() {
       this.pcstr = this.pcstr + 1;
@@ -1974,15 +1993,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-function Player(_ref) {
-  var id = _ref.id,
-      name = _ref.name,
-      race = _ref.race;
-  this.id = id;
-  this.name = name;
-  this.gender = gender;
-}
-
+// function Player({ id, name, race}) {
+//     this.id = id;
+//     this.name = name;
+//     this.gender = gender;
+// }
  // import Players from './components/PlayerComponent';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2006,15 +2021,15 @@ function Player(_ref) {
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.endpoint + page).then(function (_ref2) {
-        var data = _ref2.data;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.endpoint + page).then(function (_ref) {
+        var data = _ref.data;
         _this.pcs = data.data;
         _this.pageCount = data.meta.last_page;
         _this.loaded = true;
         _this.updated = false;
       });
     },
-    update: function update(id, name, gender, str, dex, con, wis, _int, cha) {
+    update: function update(id, name, gender, str, dex, con, wis, _int, cha, livehp, hp, ac) {
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/pcs/".concat(id), {
@@ -2026,9 +2041,12 @@ function Player(_ref) {
         con: con,
         wis: wis,
         "int": _int,
-        cha: cha
+        cha: cha,
+        livehp: livehp,
+        hp: hp,
+        ac: ac
       }).then(function () {
-        console.log('update ' + id + ' ' + name + ' str: ' + str);
+        console.log(name + ' stats have been updated');
         _this2.updated = true;
       });
     }
@@ -2544,33 +2562,127 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-6" }, [
     _c("div", [
-      _c("div", { staticClass: "card mb-5" }, [
+      _c("div", { staticClass: "card mb-5", attrs: { id: "playerCard" } }, [
         _c("div", { staticClass: "card-header" }, [
-          _c("h1", { staticClass: "display-6" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.pcname,
-                  expression: "pcname"
-                }
-              ],
-              attrs: { type: "text" },
-              domProps: { value: _vm.pcname },
-              on: {
-                change: _vm.update,
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-6" }, [
+              _c("h6", [
+                _vm._v(_vm._s(_vm.pcgender) + " " + _vm._s(_vm.pcrace) + " ")
+              ]),
+              _vm._v(" "),
+              _c("h1", { staticClass: "display-6" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.pcname,
+                      expression: "pcname"
+                    }
+                  ],
+                  staticClass: "w-100",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.pcname },
+                  on: {
+                    change: _vm.update,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.pcname = $event.target.value
+                    }
                   }
-                  _vm.pcname = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("h6", [_vm._v(_vm._s(_vm.pcrace) + " ")])
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2 text-center" }, [
+              _c("h6", [_vm._v("AC")]),
+              _vm._v(" "),
+              _c("h1", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.pcac,
+                      expression: "pcac"
+                    }
+                  ],
+                  staticClass: "w-100 text-center",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.pcac },
+                  on: {
+                    change: _vm.update,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.pcac = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2 text-center" }, [
+              _c("h6", [_vm._v("HP")]),
+              _vm._v(" "),
+              _c("h1", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.pclivehp,
+                      expression: "pclivehp"
+                    }
+                  ],
+                  staticClass: "w-100 text-center",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.pclivehp },
+                  on: {
+                    change: _vm.update,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.pclivehp = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2 text-center" }, [
+              _c("h6", [_vm._v("MAX HP")]),
+              _vm._v(" "),
+              _c("h1", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.pchp,
+                      expression: "pchp"
+                    }
+                  ],
+                  staticClass: "w-100 text-center text-muted",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.pchp },
+                  on: {
+                    change: _vm.update,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.pchp = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ])
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
@@ -2579,7 +2691,7 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-success btn-sm btn-block",
+                  staticClass: "btn btn-outline-primary btn-sm btn-block",
                   attrs: { id: "Str", name: "upStr" },
                   on: {
                     click: function($event) {
@@ -2592,15 +2704,90 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(0),
+            _c("div", { staticClass: "col-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm btn-block",
+                  attrs: { id: "Dex", name: "upDex" },
+                  on: {
+                    click: function($event) {
+                      _vm.pcdex++
+                      _vm.update()
+                    }
+                  }
+                },
+                [_vm._v("+")]
+              )
+            ]),
             _vm._v(" "),
-            _vm._m(1),
+            _c("div", { staticClass: "col-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm btn-block",
+                  attrs: { id: "Con", name: "upCon" },
+                  on: {
+                    click: function($event) {
+                      _vm.pccon++
+                      _vm.update()
+                    }
+                  }
+                },
+                [_vm._v("+")]
+              )
+            ]),
             _vm._v(" "),
-            _vm._m(2),
+            _c("div", { staticClass: "col-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm btn-block",
+                  attrs: { id: "Wis", name: "upWis" },
+                  on: {
+                    click: function($event) {
+                      _vm.pcwis++
+                      _vm.update()
+                    }
+                  }
+                },
+                [_vm._v("+")]
+              )
+            ]),
             _vm._v(" "),
-            _vm._m(3),
+            _c("div", { staticClass: "col-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm btn-block",
+                  attrs: { id: "Int", name: "upInt" },
+                  on: {
+                    click: function($event) {
+                      _vm.pcint++
+                      _vm.update()
+                    }
+                  }
+                },
+                [_vm._v("+")]
+              )
+            ]),
             _vm._v(" "),
-            _vm._m(4)
+            _c("div", { staticClass: "col-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary btn-sm btn-block",
+                  attrs: { id: "Cha", name: "upCha" },
+                  on: {
+                    click: function($event) {
+                      _vm.pccha++
+                      _vm.update()
+                    }
+                  }
+                },
+                [_vm._v("+")]
+              )
+            ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row text-center" }, [
@@ -2629,161 +2816,115 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(5)
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-danger btn-sm btn-block",
+                  attrs: { id: "Str", name: "downStr" },
+                  on: {
+                    click: function($event) {
+                      _vm.pcstr--
+                      _vm.update()
+                    }
+                  }
+                },
+                [_vm._v("-")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-danger btn-sm btn-block",
+                  attrs: { id: "Dex", name: "downDex" },
+                  on: {
+                    click: function($event) {
+                      _vm.pcdex--
+                      _vm.update()
+                    }
+                  }
+                },
+                [_vm._v("-")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-danger btn-sm btn-block",
+                  attrs: { id: "Con", name: "downCon" },
+                  on: {
+                    click: function($event) {
+                      _vm.pccon--
+                      _vm.update()
+                    }
+                  }
+                },
+                [_vm._v("-")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-danger btn-sm btn-block",
+                  attrs: { id: "Wis", name: "downWis" },
+                  on: {
+                    click: function($event) {
+                      _vm.pcwis--
+                      _vm.update()
+                    }
+                  }
+                },
+                [_vm._v("-")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-danger btn-sm btn-block",
+                  attrs: { id: "Int", name: "downInt" },
+                  on: {
+                    click: function($event) {
+                      _vm.pcint--
+                      _vm.update()
+                    }
+                  }
+                },
+                [_vm._v("-")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-danger btn-sm btn-block",
+                  attrs: { id: "Cha", name: "downCha" },
+                  on: {
+                    click: function($event) {
+                      _vm.pccha--
+                      _vm.update()
+                    }
+                  }
+                },
+                [_vm._v("-")]
+              )
+            ])
+          ])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success btn-sm btn-block",
-          attrs: { id: "Dex", name: "upDex" }
-        },
-        [_vm._v("+")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success btn-sm btn-block",
-          attrs: { id: "Con", name: "upCon" }
-        },
-        [_vm._v("+")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success btn-sm btn-block",
-          attrs: { id: "Wis", name: "upWis" }
-        },
-        [_vm._v("+")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success btn-sm btn-block",
-          attrs: { id: "Int", name: "upInt" }
-        },
-        [_vm._v("+")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success btn-sm btn-block",
-          attrs: { id: "Cha", name: "upCha" }
-        },
-        [_vm._v("+")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-2" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-danger btn-sm btn-block",
-            attrs: { id: "Str", name: "downStr" }
-          },
-          [_vm._v("-")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-2" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-danger btn-sm btn-block",
-            attrs: { id: "Dex", name: "downDex" }
-          },
-          [_vm._v("-")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-2" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-danger btn-sm btn-block",
-            attrs: { id: "Con", name: "downCon" }
-          },
-          [_vm._v("-")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-2" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-danger btn-sm btn-block",
-            attrs: { id: "Wis", name: "downWis" }
-          },
-          [_vm._v("-")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-2" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-danger btn-sm btn-block",
-            attrs: { id: "Int", name: "downInt" }
-          },
-          [_vm._v("-")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-2" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-danger btn-sm btn-block",
-            attrs: { id: "Cha", name: "downCha" }
-          },
-          [_vm._v("-")]
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

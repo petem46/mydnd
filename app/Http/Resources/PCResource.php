@@ -29,7 +29,7 @@ class PCResource extends Resource
             'hp' => $this->hp,
             'ac' => $this->ac,
             'speed' => $this->speed,
-            'lvehp' => $this->lvehp,
+            'livehp' => $this->livehp,
 
         ];
     }
