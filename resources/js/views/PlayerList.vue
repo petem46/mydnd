@@ -4,9 +4,13 @@
     <div v-if="message" class="alert-success">{{ message }}</div>
     <div v-if="! loaded"><i class="fas fa-spinner fa-spin fa-3x"></i>&nbsp;&nbsp; Loading...</div>
     <div v-if="loaded">
-    <div class="container1">
         <div class="row justify-content-center">
-            <player-component v-for="pc in pcs" v-bind="pc" :key="pc.id"></player-component>
+            <player-component
+                v-for="pc in pcs"
+                v-bind="pc"
+                :key="pc.id"
+                @update="update"
+            ></player-component>
         </div>
         <paginate
             :page-count="pageCount"
@@ -16,12 +20,19 @@
             :container-class="'pagination'">
         </paginate>
     </div>
-    </div>
 </div>
 </template>
 
 <script>
+
+    function Player({ id, name, race}) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+    }
+
     import axios from 'axios';
+    // import Players from './components/PlayerComponent';
     export default {
 
         data() {
@@ -46,13 +57,36 @@
                         this.pcs = data.data;
                         this.pageCount = data.meta.last_page;
                         this.loaded = true;
+                        this.updated = false;
                     });
             },
-            update(val) {
-                // this.$emit('update', this.id, val.target.pc.race.value);
-                console.log('update');
+            update(
+                    id,
+                    name,
+                    gender,
+                    str,
+                    dex,
+                    con,
+                    wis,
+                    int,
+                    cha
+                ) {
+                axios.put(`/api/pcs/${id}`, {
+                    name,
+                    // race,
+                    gender,
+                    str,
+                    dex,
+                    con,
+                    wis,
+                    int,
+                    cha
+                })
+                .then(() => {
+                    console.log('update ' + id + ' ' + name + ' str: ' + str );
+                    this.updated = true;
+                });
             },
         },
-        // props: ['id','name', 'str'],
     }
 </script>

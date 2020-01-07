@@ -18,6 +18,7 @@ class PCResource extends Resource
             'id' => $this->id,
             'name' => $this->name,
             'race' => $this->race['name'],
+            'gender' => $this->gender,
             'class_id' => $this->class_id,
             'str' => $this->str,
             'dex' => $this->dex,

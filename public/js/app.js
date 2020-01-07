@@ -1881,44 +1881,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['id', 'name', 'race', 'str', 'dex', 'con', 'wis', 'int', 'cha'],
+  props: ['id', 'name', 'race', 'gender', 'str', 'dex', 'con', 'wis', 'int', 'cha'],
   data: function data() {
     return {
-      message: null,
-      loaded: false,
       pcname: this.name,
-      pageCount: 1,
-      endpoint: 'api/pcs?page='
+      pcrace: this.race,
+      pcgender: this.gender,
+      pcstr: this.str,
+      pcdex: this.dex,
+      pccon: this.con,
+      pcwis: this.wis,
+      pcint: this["int"],
+      pccha: this.cha
     };
-  },
-  computed: {
-    getName: function getName() {
-      return this.name;
-    }
-  },
-  created: function created() {
-    this.fetch();
   },
   mounted: function mounted() {
     console.log('Party ready.');
   },
   methods: {
-    fetch: function fetch() {
-      var _this = this;
-
-      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.endpoint + page).then(function (_ref) {
-        var data = _ref.data;
-        _this.pcs = data.data;
-        _this.pageCount = data.meta.last_page;
-        _this.loaded = true;
-      });
+    update: function update(val) {
+      this.$emit('update', this.id, this.pcname, // this.pcrace,
+      this.pcgender, this.pcstr, this.pcdex, this.pccon, this.pcwis, this.pcint, this.pccha);
     },
-    update: function update() {
-      // this.$emit('update', this.id, val.target.pc.race.value);
-      console.log('update(' + this.pcname + ');');
+    upStr: function upStr() {
+      this.pcstr = this.pcstr + 1;
+      console.log(this.pcstr); // update();
     }
   }
 });
@@ -1976,6 +1971,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+function Player(_ref) {
+  var id = _ref.id,
+      name = _ref.name,
+      race = _ref.race;
+  this.id = id;
+  this.name = name;
+  this.gender = gender;
+}
+
+ // import Players from './components/PlayerComponent';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1998,19 +2006,33 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.endpoint + page).then(function (_ref) {
-        var data = _ref.data;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.endpoint + page).then(function (_ref2) {
+        var data = _ref2.data;
         _this.pcs = data.data;
         _this.pageCount = data.meta.last_page;
         _this.loaded = true;
+        _this.updated = false;
       });
     },
-    update: function update(val) {
-      // this.$emit('update', this.id, val.target.pc.race.value);
-      console.log('update');
-    }
-  } // props: ['id','name', 'str'],
+    update: function update(id, name, gender, str, dex, con, wis, _int, cha) {
+      var _this2 = this;
 
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/pcs/".concat(id), {
+        name: name,
+        // race,
+        gender: gender,
+        str: str,
+        dex: dex,
+        con: con,
+        wis: wis,
+        "int": _int,
+        cha: cha
+      }).then(function () {
+        console.log('update ' + id + ' ' + name + ' str: ' + str);
+        _this2.updated = true;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -2520,90 +2542,248 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("Player")]),
-    _vm._v(" "),
-    _vm.message
-      ? _c("div", { staticClass: "alert-success" }, [
-          _vm._v(_vm._s(_vm.message))
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    !_vm.loaded
-      ? _c("div", [
-          _c("i", { staticClass: "fas fa-spinner fa-spin fa-3x" }),
-          _vm._v("   Loading...")
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.loaded
-      ? _c("div", [
-          _c("div", { staticClass: "container1" }, [
-            _c("div", { staticClass: "row justify-content-center" }, [
-              _c("div", { staticClass: "card mb-5" }, [
-                _c("div", { staticClass: "card-header" }, [
-                  _c("h1", { staticClass: "display-6" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.pcname,
-                          expression: "pcname"
-                        }
-                      ],
-                      attrs: { type: "text" },
-                      domProps: { value: _vm.pcname },
-                      on: {
-                        change: _vm.update,
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.pcname = $event.target.value
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("h6", [_vm._v(_vm._s(_vm.race) + " ")])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-body" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-2" }, [
-                      _vm._v("Str: " + _vm._s(_vm.str))
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-2" }, [
-                      _vm._v("Dex: " + _vm._s(_vm.dex))
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-2" }, [
-                      _vm._v("Con: " + _vm._s(_vm.con))
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-2" }, [
-                      _vm._v("Wis: " + _vm._s(_vm.wis))
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-2" }, [
-                      _vm._v("Int: " + _vm._s(_vm.int))
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-2" }, [
-                      _vm._v("Cha: " + _vm._s(_vm.cha))
-                    ])
-                  ])
-                ])
-              ])
+  return _c("div", { staticClass: "col-6" }, [
+    _c("div", [
+      _c("div", { staticClass: "card mb-5" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("h1", { staticClass: "display-6" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.pcname,
+                  expression: "pcname"
+                }
+              ],
+              attrs: { type: "text" },
+              domProps: { value: _vm.pcname },
+              on: {
+                change: _vm.update,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.pcname = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("h6", [_vm._v(_vm._s(_vm.pcrace) + " ")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success btn-sm btn-block",
+                  attrs: { id: "Str", name: "upStr" },
+                  on: {
+                    click: function($event) {
+                      _vm.pcstr++
+                      _vm.update()
+                    }
+                  }
+                },
+                [_vm._v("+")]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _vm._m(4)
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row text-center" }, [
+            _c("div", { staticClass: "col-2" }, [
+              _vm._v("Str: " + _vm._s(_vm.pcstr))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2" }, [
+              _vm._v("Dex: " + _vm._s(_vm.pcdex))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2" }, [
+              _vm._v("Con: " + _vm._s(_vm.pccon))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2" }, [
+              _vm._v("Wis: " + _vm._s(_vm.pcwis))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2" }, [
+              _vm._v("Int: " + _vm._s(_vm.pcint))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-2" }, [
+              _vm._v("Cha: " + _vm._s(_vm.pccha))
             ])
-          ])
+          ]),
+          _vm._v(" "),
+          _vm._m(5)
         ])
-      : _vm._e()
+      ])
+    ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success btn-sm btn-block",
+          attrs: { id: "Dex", name: "upDex" }
+        },
+        [_vm._v("+")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success btn-sm btn-block",
+          attrs: { id: "Con", name: "upCon" }
+        },
+        [_vm._v("+")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success btn-sm btn-block",
+          attrs: { id: "Wis", name: "upWis" }
+        },
+        [_vm._v("+")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success btn-sm btn-block",
+          attrs: { id: "Int", name: "upInt" }
+        },
+        [_vm._v("+")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success btn-sm btn-block",
+          attrs: { id: "Cha", name: "upCha" }
+        },
+        [_vm._v("+")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-2" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-danger btn-sm btn-block",
+            attrs: { id: "Str", name: "downStr" }
+          },
+          [_vm._v("-")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-2" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-danger btn-sm btn-block",
+            attrs: { id: "Dex", name: "downDex" }
+          },
+          [_vm._v("-")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-2" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-danger btn-sm btn-block",
+            attrs: { id: "Con", name: "downCon" }
+          },
+          [_vm._v("-")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-2" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-danger btn-sm btn-block",
+            attrs: { id: "Wis", name: "downWis" }
+          },
+          [_vm._v("-")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-2" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-danger btn-sm btn-block",
+            attrs: { id: "Int", name: "downInt" }
+          },
+          [_vm._v("-")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-2" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-danger btn-sm btn-block",
+            attrs: { id: "Cha", name: "downCha" }
+          },
+          [_vm._v("-")]
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -2714,36 +2894,38 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.loaded
-      ? _c("div", [
-          _c(
-            "div",
-            { staticClass: "container1" },
-            [
-              _c(
-                "div",
-                { staticClass: "row justify-content-center" },
-                _vm._l(_vm.pcs, function(pc) {
-                  return _c(
+      ? _c(
+          "div",
+          [
+            _c(
+              "div",
+              { staticClass: "row justify-content-center" },
+              _vm._l(_vm.pcs, function(pc) {
+                return _c(
+                  "player-component",
+                  _vm._b(
+                    { key: pc.id, on: { update: _vm.update } },
                     "player-component",
-                    _vm._b({ key: pc.id }, "player-component", pc, false)
+                    pc,
+                    false
                   )
-                }),
-                1
-              ),
-              _vm._v(" "),
-              _c("paginate", {
-                attrs: {
-                  "page-count": _vm.pageCount,
-                  "click-handler": _vm.fetch,
-                  "prev-text": "Prev",
-                  "next-text": "Next",
-                  "container-class": "pagination"
-                }
-              })
-            ],
-            1
-          )
-        ])
+                )
+              }),
+              1
+            ),
+            _vm._v(" "),
+            _c("paginate", {
+              attrs: {
+                "page-count": _vm.pageCount,
+                "click-handler": _vm.fetch,
+                "prev-text": "Prev",
+                "next-text": "Next",
+                "container-class": "pagination"
+              }
+            })
+          ],
+          1
+        )
       : _vm._e()
   ])
 }
