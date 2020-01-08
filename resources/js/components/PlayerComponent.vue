@@ -82,7 +82,7 @@
             };
         },
         mounted() {
-            console.log('Party ready.')
+            console.log('Player ' + this.name + ' Componenet Loaded.')
         },
         methods: {
             update(val) {
@@ -102,11 +102,6 @@
                     this.pcac,
                 );
             },
-            upStr() {
-                this.pcstr = this.pcstr + 1;
-                console.log(this.pcstr);
-                // update();
-            }
         },
     }
 </script>

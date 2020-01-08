@@ -1,6 +1,5 @@
 <template>
 <div>
-    <h1>List</h1>
     <div v-if="message" class="alert-success">{{ message }}</div>
     <div v-if="! loaded"><i class="fas fa-spinner fa-spin fa-3x"></i>&nbsp;&nbsp; Loading...</div>
     <div v-if="loaded">
@@ -24,15 +23,7 @@
 </template>
 
 <script>
-
-    // function Player({ id, name, race}) {
-    //     this.id = id;
-    //     this.name = name;
-    //     this.gender = gender;
-    // }
-
     import axios from 'axios';
-    // import Players from './components/PlayerComponent';
     export default {
 
         data() {
@@ -48,7 +39,7 @@
             this.fetch();
         },
         mounted() {
-            console.log('Party ready.')
+            console.log('Player List Loaded.')
         },
         methods: {
             fetch(page = 1) {
