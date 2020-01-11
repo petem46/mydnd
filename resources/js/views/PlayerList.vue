@@ -39,7 +39,7 @@
             this.fetch();
         },
         mounted() {
-            console.log('Player List Loaded.')
+            console.log('Fetching Player List.')
         },
         methods: {
             fetch(page = 1) {
@@ -49,6 +49,7 @@
                         this.pageCount = data.meta.last_page;
                         this.loaded = true;
                         this.updated = false;
+                        console.log('Player List Ready.');
                     });
             },
             update(
