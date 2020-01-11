@@ -4,5 +4,12 @@
     </div>
 </template>
 <script>
-    export default {}
+    export default {
+        mounted() {
+            Echo.channel('player-tracker')
+            .listen('PlayerUpdated', (e) => {
+                console.log('omgggg realtime bro....')
+            });
+        }
+    }
 </script>

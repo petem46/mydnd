@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\PlayerUpdated;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,7 +18,13 @@
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('/fire', function () {
+        event(new PlayerUpdated);
+        return 'Fired';
+    })->name('fire');
+
     Route::get('/{any}', 'SpaController@index')->where('any', '.*');
-    // Route::get('/', 'HomeController@index')->name('home');
+
 });
 

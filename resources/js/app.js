@@ -1,4 +1,4 @@
-// require('./bootstrap');
+require('./bootstrap');
 
 // window.Vue = require('vue');
 
@@ -43,6 +43,11 @@ const router = new VueRouter({
             path: '/pc',
             name: 'players',
             component: Players,
+        },
+        {
+            path: '/fire',
+            name: 'fire',
+            component: Cams,
         },
     ],
 });

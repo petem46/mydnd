@@ -82,7 +82,24 @@
             };
         },
         mounted() {
-            console.log('Player ' + this.name + ' Componenet Loaded.')
+            console.log('Player ' + this.name + ' Componenet Loaded.');
+            Echo.channel('player-tracker.' + this.id)
+                .listen('PlayerUpdated', (pc) => {
+                // console.log(pc);
+                this.pcname = pc.name;
+                // this.pcrace = pc.race;
+                this.pcgender = pc.gender;
+                this.pcstr = pc.str;
+                this.pcdex = pc.dex;
+                this.pccon = pc.con;
+                this.pcwis = pc.wis;
+                this.pcint = pc.int;
+                this.pccha = pc.cha;
+                this.pclivehp = pc.livehp;
+                this.pchp = pc.hp;
+                this.pcac = pc.ac;
+
+            });
         },
         methods: {
             update(val) {
