@@ -1,6 +1,6 @@
 <template>
 <div class="col-12 col-lg-6">
-<!-- <div v-if="message" class="alert-success">{{ message }}</div>
+<div v-if="message" class="alert-success">{{ message }}</div>
 <div v-if="! loaded"><i class="fas fa-spinner fa-spin fa-3x"></i>&nbsp;&nbsp; Loading...</div> -->
 <div>
     <!-- <div v-if="loaded"> -->
@@ -85,7 +85,7 @@
             console.log('Player ' + this.name + ' Componenet Loaded.');
             Echo.channel('player-tracker.' + this.id)
                 .listen('PlayerUpdated', (pc) => {
-                // console.log(pc);
+                console.log(pc);
                 this.pcname = pc.name;
                 // this.pcrace = pc.race;
                 this.pcgender = pc.gender;

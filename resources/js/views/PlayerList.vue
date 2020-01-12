@@ -40,10 +40,6 @@
         },
         mounted() {
             console.log('Fetching Player List.')
-        //     Echo.channel('player-tracker')
-        //         .listen('PlayerUpdated', (e) => {
-        //         console.log('Listening for updates')
-        // });
         },
         methods: {
             fetch(page = 1) {
