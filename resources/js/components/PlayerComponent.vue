@@ -1,6 +1,6 @@
 <template>
 <div class="col-12 col-lg-6">
-<div v-if="message" class="alert-success">{{ message }}</div>
+<!-- <div v-if="message" class="alert-success">{{ message }}</div> -->
 <!-- <div v-if="! loaded"><i class="fas fa-spinner fa-spin fa-3x"></i>&nbsp;&nbsp; Loading...</div> -->
 <div>
     <!-- <div v-if="loaded"> -->
