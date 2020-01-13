@@ -81,7 +81,7 @@
                     ac,
                 })
                 .then(() => {
-                    console.log(name + ' stats have been updated');
+                    // console.log(name + ' stats have been updated');
                     this.updated = true;
                 });
             },

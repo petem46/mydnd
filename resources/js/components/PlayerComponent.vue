@@ -86,6 +86,7 @@
             Echo.channel('player-tracker.' + this.id)
                 .listen('PlayerUpdated', (pc) => {
                 console.log(pc);
+                console.log(pc.name + ' stats have been updated');
                 this.pcname = pc.name;
                 // this.pcrace = pc.race;
                 this.pcgender = pc.gender;
