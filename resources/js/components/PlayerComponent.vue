@@ -82,9 +82,6 @@
             };
         },
         mounted() {
-<<<<<<< HEAD
-            console.log('Player ready.')
-=======
             console.log('Player ' + this.name + ' Componenet Loaded.');
             Echo.channel('player-tracker.' + this.id)
                 .listen('PlayerUpdated', (pc) => {
@@ -104,7 +101,6 @@
                 this.pcac = pc.ac;
 
             });
->>>>>>> 95bc3a4b4662a81b46b8e7889e0af8a71ac93163
         },
         methods: {
             update(val) {

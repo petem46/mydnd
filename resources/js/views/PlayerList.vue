@@ -1,9 +1,5 @@
 <template>
 <div>
-<<<<<<< HEAD
-    <!-- <h1>List</h1> -->
-=======
->>>>>>> 95bc3a4b4662a81b46b8e7889e0af8a71ac93163
     <div v-if="message" class="alert-success">{{ message }}</div>
     <div v-if="! loaded"><i class="fas fa-spinner fa-spin fa-3x"></i>&nbsp;&nbsp; Loading...</div>
     <div v-if="loaded">
@@ -43,11 +39,7 @@
             this.fetch();
         },
         mounted() {
-<<<<<<< HEAD
-            console.log('Listing Players.')
-=======
             console.log('Fetching Player List.');
->>>>>>> 95bc3a4b4662a81b46b8e7889e0af8a71ac93163
         },
         methods: {
             fetch(page = 1) {
