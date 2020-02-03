@@ -1,7 +1,7 @@
 <template>
-<div class="col-6">
-<!-- <div v-if="message" class="alert-success">{{ message }}</div>
-<div v-if="! loaded"><i class="fas fa-spinner fa-spin fa-3x"></i>&nbsp;&nbsp; Loading...</div> -->
+<div class="col-12 col-lg-6">
+<!-- <div v-if="message" class="alert-success">{{ message }}</div> -->
+<!-- <div v-if="! loaded"><i class="fas fa-spinner fa-spin fa-3x"></i>&nbsp;&nbsp; Loading...</div> -->
 <div>
     <!-- <div v-if="loaded"> -->
     <!-- <div class="row justify-content-center"> -->
@@ -82,7 +82,29 @@
             };
         },
         mounted() {
+<<<<<<< HEAD
             console.log('Player ready.')
+=======
+            console.log('Player ' + this.name + ' Componenet Loaded.');
+            Echo.channel('player-tracker.' + this.id)
+                .listen('PlayerUpdated', (pc) => {
+                console.log(pc);
+                console.log(pc.name + ' stats have been updated');
+                this.pcname = pc.name;
+                // this.pcrace = pc.race;
+                this.pcgender = pc.gender;
+                this.pcstr = pc.str;
+                this.pcdex = pc.dex;
+                this.pccon = pc.con;
+                this.pcwis = pc.wis;
+                this.pcint = pc.int;
+                this.pccha = pc.cha;
+                this.pclivehp = pc.livehp;
+                this.pchp = pc.hp;
+                this.pcac = pc.ac;
+
+            });
+>>>>>>> 95bc3a4b4662a81b46b8e7889e0af8a71ac93163
         },
         methods: {
             update(val) {
@@ -102,11 +124,6 @@
                     this.pcac,
                 );
             },
-            upStr() {
-                this.pcstr = this.pcstr + 1;
-                console.log(this.pcstr);
-                // update();
-            }
         },
     }
 </script>

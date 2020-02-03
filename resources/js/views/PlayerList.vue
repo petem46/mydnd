@@ -1,6 +1,9 @@
 <template>
 <div>
+<<<<<<< HEAD
     <!-- <h1>List</h1> -->
+=======
+>>>>>>> 95bc3a4b4662a81b46b8e7889e0af8a71ac93163
     <div v-if="message" class="alert-success">{{ message }}</div>
     <div v-if="! loaded"><i class="fas fa-spinner fa-spin fa-3x"></i>&nbsp;&nbsp; Loading...</div>
     <div v-if="loaded">
@@ -24,15 +27,7 @@
 </template>
 
 <script>
-
-    // function Player({ id, name, race}) {
-    //     this.id = id;
-    //     this.name = name;
-    //     this.gender = gender;
-    // }
-
     import axios from 'axios';
-    // import Players from './components/PlayerComponent';
     export default {
 
         data() {
@@ -48,7 +43,11 @@
             this.fetch();
         },
         mounted() {
+<<<<<<< HEAD
             console.log('Listing Players.')
+=======
+            console.log('Fetching Player List.');
+>>>>>>> 95bc3a4b4662a81b46b8e7889e0af8a71ac93163
         },
         methods: {
             fetch(page = 1) {
@@ -58,6 +57,8 @@
                         this.pageCount = data.meta.last_page;
                         this.loaded = true;
                         this.updated = false;
+                        console.log('Player List Ready.');
+                        console.log(data.data);
                     });
             },
             update(
@@ -89,7 +90,7 @@
                     ac,
                 })
                 .then(() => {
-                    console.log(name + ' stats have been updated');
+                    // console.log(name + ' stats have been updated');
                     this.updated = true;
                 });
             },

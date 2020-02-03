@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
+
 use App\PC;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PCResource;
+use App\Events\PlayerUpdated;
 
 class PCsController extends Controller
 {
     public function index()
     {
-        $pcs = PC::with('Race')->paginate(6);
+        $pcs = PC::with('Race')->orderby('livehp', 'desc')->paginate(6);
 
         return PCResource::collection($pcs);
     }
@@ -38,6 +40,9 @@ class PCsController extends Controller
         $pc->hp = $request->hp;
         $pc->ac = $request->ac;
         $pc->save();
+
+        event(new PlayerUpdated($pc));
+
         return response(null, Response::HTTP_OK);
     }
 }

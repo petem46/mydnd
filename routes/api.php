@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\PlayerUpdated;
 use Illuminate\Http\Request;
 
 /*
@@ -16,6 +17,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware('auth:api')->get('/fire', function () {
+    event(new PlayerUpdated);
+    dd('fired');
+});
+
+Route::post('/login', 'AuthController@login');
 
 Route::resource('/pcs', 'Api\PCsController', [
     // 'except' => ['edit', 'show', 'store']

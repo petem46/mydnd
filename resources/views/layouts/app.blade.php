@@ -49,6 +49,7 @@
                                 </li>
                             @endif
                         @else
+                        <li class="nav-item"><a class="nav-link" href="{{ route('fire') }}">{{ __('Fire') }}</a></li>
                         <li class="nav-item"><router-link :to="{ name: 'home' }" class="nav-link mr-3">Home</router-link></li>
                         <li class="nav-item"><router-link :to="{ name: 'cams' }" class="nav-link mr-3">Campaigns</router-link></li>
                         <li class="nav-item"><router-link :to="{ name: 'list' }" class="nav-link mr-3">Players</router-link></li>
