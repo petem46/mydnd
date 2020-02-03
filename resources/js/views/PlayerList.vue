@@ -39,7 +39,7 @@
             this.fetch();
         },
         mounted() {
-            console.log('Fetching Player List.')
+            console.log('Fetching Player List.');
         },
         methods: {
             fetch(page = 1) {
@@ -50,6 +50,7 @@
                         this.loaded = true;
                         this.updated = false;
                         console.log('Player List Ready.');
+                        console.log(data.data);
                     });
             },
             update(

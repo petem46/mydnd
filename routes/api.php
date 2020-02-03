@@ -23,7 +23,7 @@ Route::middleware('auth:api')->get('/fire', function () {
     dd('fired');
 });
 
-
+Route::post('/login', 'AuthController@login');
 
 Route::resource('/pcs', 'Api\PCsController', [
     // 'except' => ['edit', 'show', 'store']

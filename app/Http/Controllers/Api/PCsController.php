@@ -14,7 +14,7 @@ class PCsController extends Controller
 {
     public function index()
     {
-        $pcs = PC::with('Race')->paginate(6);
+        $pcs = PC::with('Race')->orderby('livehp', 'desc')->paginate(6);
 
         return PCResource::collection($pcs);
     }
