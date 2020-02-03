@@ -30,6 +30,7 @@ class CreatePcsTable extends Migration
             $table->integer('ac');
             $table->integer('speed');
             $table->integer('livehp');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

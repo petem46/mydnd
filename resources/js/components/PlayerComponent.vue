@@ -82,7 +82,7 @@
             };
         },
         mounted() {
-            console.log('Party ready.')
+            console.log('Player ready.')
         },
         methods: {
             update(val) {
