@@ -12,7 +12,7 @@ class PCsTableSeeder extends Seeder
      */
     public function run()
     {
-        $count = 12;
+        $count = 48;
         factory(PC::class, $count)->create();
     }
 }
