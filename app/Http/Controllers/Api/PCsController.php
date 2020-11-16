@@ -26,6 +26,7 @@ class PCsController extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($request);
         $pc = PC::findOrFail($id);
         $pc->name = $request->name;
         // $pc->race = $request->race;

@@ -7,7 +7,7 @@
             <player-component
                 v-for="pc in pcs"
                 v-bind="pc"
-                :key="pc.id"
+                :key="pc.pcdetails.id"
                 @update="update"
             ></player-component>
         </div>

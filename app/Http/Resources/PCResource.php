@@ -15,9 +15,10 @@ class PCResource extends Resource
     public function toArray($request)
     {
         return [
+            'race' => $this->race['name'],
+            'pcdetails' => [
             'id' => $this->id,
             'name' => $this->name,
-            'race' => $this->race['name'],
             'gender' => $this->gender,
             'class_id' => $this->class_id,
             'str' => $this->str,
@@ -30,7 +31,7 @@ class PCResource extends Resource
             'ac' => $this->ac,
             'speed' => $this->speed,
             'livehp' => $this->livehp,
-
+            ]
         ];
     }
 }

@@ -23,6 +23,9 @@ Route::middleware('auth:api')->get('/fire', function () {
     dd('fired');
 });
 
+Route::resource('race', 'RaceController');
+Route::resource('races', 'RaceController');
+
 Route::post('/login', 'AuthController@login');
 
 Route::resource('/pcs', 'Api\PCsController', [
